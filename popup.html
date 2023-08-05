@@ -1,0 +1,148 @@
+<html>
+  <body>
+    <style>
+      #tick {
+        stroke: #63bc01;
+        stroke-width: 6;
+        transition: all 1s;
+      }
+
+      #circle {
+        stroke: #63bc01;
+        stroke-width: 6;
+        transform-origin: 50px 50px 0;
+        transition: all 1s;
+      }
+
+      .progress #tick {
+        opacity: 0;
+      }
+
+      .ready #tick {
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 1000;
+        animation: draw 8s ease-out forwards;
+      }
+
+      .progress #circle {
+        stroke: #4c4c4c;
+        stroke-dasharray: 314;
+        stroke-dashoffset: 1000;
+        animation: spin 3s linear infinite;
+      }
+
+      .ready #circle {
+        stroke-dashoffset: 66;
+        stroke: #63bc01;
+      }
+
+      #circle {
+        stroke-dasharray: 500;
+      }
+
+      .hide {
+        display: none;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+          stroke-dashoffset: 66;
+        }
+        50% {
+          transform: rotate(540deg);
+          stroke-dashoffset: 314;
+        }
+        100% {
+          transform: rotate(1080deg);
+          stroke-dashoffset: 66;
+        }
+      }
+
+      @keyframes draw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      img {
+        height: auto;
+        max-width: 100%;
+      }
+
+      #user-card {
+        position: relative;
+        height: 32px;
+        width: 32px;
+      }
+      #user-card img {
+        height: 28px;
+      }
+      #user-card img:first-of-type {
+        z-index: 1;
+        position: absolute;
+        left: 5px;
+        top: 0;
+      }
+      #user-card img:last-of-type {
+        position: absolute;
+        left: 0;
+        top: 4px;
+      }
+
+      ul {
+        width: 500px;
+      }
+
+      li > div {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      * {
+        font-size: 20px;
+        line-height: 32px;
+      }
+    </style>
+
+    <ul>
+      <li>
+        <div>
+          Loading player info
+          <div id="spinner-player-card"></div>
+          <div id="user-card"></div>
+        </div>
+      </li>
+      <li>
+        <div>
+          Loading
+          <a
+            href="https://marvelstrikeforce.com/en/store"
+            target="_blank"
+            rel="noopener noreferrer"
+            >offers</a
+          >
+          <div id="spinner-offers"></div>
+          <div id="offers-info"></div>
+        </div>
+        <ul id="offers"></ul>
+      </li>
+      <li>
+        <div>
+          Loading
+          <a
+            href="https://marvelstrikeforce.com/en/milestones"
+            target="_blank"
+            rel="noopener noreferrer"
+            >milestones</a
+          >
+          <div id="spinner-milestones"></div>
+        </div>
+        <ul id="milestones"></ul>
+      </li>
+    </ul>
+    <div id="error"></div>
+    <script src="popup.js"></script>
+  </body>
+</html>

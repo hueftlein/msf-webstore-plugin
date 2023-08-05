@@ -1,0 +1,13 @@
+{
+  "name": "MSF webstore helper",
+  "description": "",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "msf-white.png"
+  },
+  "host_permissions": [
+    "*://api-prod.marvelstrikeforce.com/*"
+  ]
+}
