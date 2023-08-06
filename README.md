@@ -4,7 +4,7 @@
 
 When clicked, this extension will automatically
 - claim all available free offers
-- claim all achived milestone tiers
+- claim all achieved milestone tiers
 
 ## Installation Guide
 
