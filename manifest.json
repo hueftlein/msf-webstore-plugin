@@ -7,7 +7,6 @@
     "default_popup": "popup.html",
     "default_icon": "msf-white.png"
   },
-  "host_permissions": [
-    "*://api-prod.marvelstrikeforce.com/*"
-  ]
+  "host_permissions": ["*://api-prod.marvelstrikeforce.com/*"],
+  "permissions": ["tabs"]
 }

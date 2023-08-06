@@ -101,6 +101,24 @@ const catchError = (e) => {
   renderError();
 };
 
+const createSession = () =>
+  new Promise((resolve, reject) => {
+    chrome.tabs
+      .create({
+        url: "https://marvelstrikeforce.com/",
+        active: false,
+      })
+      .then((msfTab) => {
+        chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+          if (tabId === msfTab.id && changeInfo.status === "complete") {
+            chrome.tabs.remove(tabId);
+            resolve();
+          }
+        });
+      })
+      .catch(reject);
+  });
+
 const renderUserCard = (playerCard) => {
   document.getElementById("user-card").innerHTML = `
         <img src="${playerCard.icon}">
@@ -206,5 +224,15 @@ const onGetPLayerCard = (res) => {
     .catch(catchError);
 };
 
-updateSpinner("player-card");
-getPLayerCard().then(onGetPLayerCard).catch(catchError);
+const onCreateSession = () => {
+  updateSpinner("session", true);
+  updateSpinner("player-card");
+  getPLayerCard().then(onGetPLayerCard).catch(catchError);
+};
+
+const start = () => {
+  updateSpinner("session");
+  createSession().then(onCreateSession).catch(catchError);
+};
+
+start();
