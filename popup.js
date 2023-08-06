@@ -157,14 +157,14 @@ const onGetOffers = (playerCard) => (res) => {
       renderOffers(freeOffers, offers.length);
       freeOffers.forEach((freeOffer, i) => {
         if ((freeOffer.remainingPurchases = 0)) {
-          updateSpinner(`"offers"-${i}`, true);
+          updateSpinner(`offers-${i}`, true);
         } else {
           purchaseOffer({
             offerId: freeOffer.id,
             restUuid: playerCard.user.restUuid,
             userGuid: playerCard.user.userGuid,
           })
-            .then(() => updateSpinner(`"offers"-${i}`, true))
+            .then(() => updateSpinner(`offers-${i}`, true))
             .catch(catchError);
         }
       });
