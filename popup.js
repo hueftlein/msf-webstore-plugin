@@ -109,12 +109,16 @@ const createSession = () =>
         active: false,
       })
       .then((msfTab) => {
-        chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+        const listener = (tabId, changeInfo) => {
           if (tabId === msfTab.id && changeInfo.status === "complete") {
-            chrome.tabs.remove(tabId);
-            resolve();
+            chrome.tabs.onUpdated.removeListener(listener);
+            window.setTimeout(() => {
+              chrome.tabs.remove(tabId);
+              resolve();
+            }, 1000);
           }
-        });
+        };
+        chrome.tabs.onUpdated.addListener(listener);
       })
       .catch(reject);
   });
