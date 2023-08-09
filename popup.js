@@ -11,7 +11,7 @@ const init = {
     "sec-fetch-dest": "empty",
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-site",
-    "x-app-version": "7.3.0",
+    "x-app-version": "7.3.1",
     // "x-titan-token": ""
   },
   referrer: "https://marvelstrikeforce.com/",
