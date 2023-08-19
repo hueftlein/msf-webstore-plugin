@@ -69,9 +69,9 @@ const getMilestones = async () =>
     init
   );
 
-const claimMilestone = async (milestoneId) => {
+const claimMilestone = async (milestoneId, maxTier) => {
   fetch(
-    `https://api-prod.marvelstrikeforce.com/services/api/milestone/${milestoneId}/claimAll/default/1/1`,
+    `https://api-prod.marvelstrikeforce.com/services/api/milestone/${milestoneId}/claimAll/default/1/${maxTier}`,
     {
       ...init,
       method: "POST",
@@ -205,7 +205,7 @@ const onGetMilestones = (res) => {
         if (!claimableTiers?.length) {
           updateSpinner(`milestones-${i}`, true);
         } else {
-          claimMilestone(milestone.id)
+          claimMilestone(milestone.id, claimableTiers.slice(-1))
             .catch(catchError)
             .then(() => updateSpinner(`milestones-${i}`, true));
         }
