@@ -11,7 +11,7 @@ const init = {
     "sec-fetch-dest": "empty",
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-site",
-    "x-app-version": "7.3.4",
+    "x-app-version": "7.4.2",
     // "x-titan-token": ""
   },
   referrer: "https://marvelstrikeforce.com/",
@@ -103,6 +103,7 @@ const catchError = (e) => {
 
 const createSession = () =>
   new Promise((resolve, reject) => {
+    return resolve();
     chrome.tabs
       .create({
         url: "https://marvelstrikeforce.com/",
