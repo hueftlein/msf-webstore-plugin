@@ -11,7 +11,7 @@ const init = {
     "sec-fetch-dest": "empty",
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-site",
-    "x-app-version": "7.4.2",
+    // "x-app-version": "8.0.1",
     // "x-titan-token": ""
   },
   referrer: "https://marvelstrikeforce.com/",
@@ -78,6 +78,12 @@ const claimMilestone = async (milestoneId, maxTier) => {
     }
   );
 };
+
+const syncRoster = async () =>
+  fetch(
+    "https://api-prod.marvelstrikeforce.com/services/api/syncPlayerRoster",
+    { ...init, method: "POST" }
+  );
 
 const spinner = (ready) => `<svg class="check ${
   ready ? "ready" : "progress"
@@ -229,15 +235,32 @@ const onGetPLayerCard = (res) => {
     .catch(catchError);
 };
 
+const renderSyncRoster = (result) => {
+  document.getElementById("sync-roster").innerHTML = result;
+};
+
+const onSyncRoster = (res) => {
+  res
+    .text()
+    .then((result) => {
+      updateSpinner("sync-roster", true);
+      renderSyncRoster(result);
+    })
+    .catch(catchError);
+};
+
 const onCreateSession = () => {
-  updateSpinner("session", true);
+  //updateSpinner("session", true);
   updateSpinner("player-card");
   getPLayerCard().then(onGetPLayerCard).catch(catchError);
+  updateSpinner("sync-roster");
+  syncRoster().then(onSyncRoster).catch(catchError);
 };
 
 const start = () => {
-  updateSpinner("session");
-  createSession().then(onCreateSession).catch(catchError);
+  //updateSpinner("session");
+  //createSession().then(onCreateSession).catch(catchError);
+  onCreateSession();
 };
 
 start();
