@@ -107,29 +107,6 @@ const catchError = (e) => {
   renderError();
 };
 
-const createSession = () =>
-  new Promise((resolve, reject) => {
-    return resolve();
-    chrome.tabs
-      .create({
-        url: "https://marvelstrikeforce.com/",
-        active: false,
-      })
-      .then((msfTab) => {
-        const listener = (tabId, changeInfo) => {
-          if (tabId === msfTab.id && changeInfo.status === "complete") {
-            chrome.tabs.onUpdated.removeListener(listener);
-            window.setTimeout(() => {
-              chrome.tabs.remove(tabId);
-              resolve();
-            }, 1000);
-          }
-        };
-        chrome.tabs.onUpdated.addListener(listener);
-      })
-      .catch(reject);
-  });
-
 const renderUserCard = (playerCard) => {
   document.getElementById("user-card").innerHTML = `
         <img src="${playerCard.icon}">
@@ -236,31 +213,23 @@ const onGetPLayerCard = (res) => {
 };
 
 const renderSyncRoster = (result) => {
-  document.getElementById("sync-roster").innerHTML = result;
+  document.getElementById("spinner-sync-roster").innerHTML = result;
 };
 
 const onSyncRoster = (res) => {
   res
     .text()
     .then((result) => {
-      updateSpinner("sync-roster", true);
       renderSyncRoster(result);
     })
     .catch(catchError);
 };
 
-const onCreateSession = () => {
-  //updateSpinner("session", true);
+const start = () => {
   updateSpinner("player-card");
   getPLayerCard().then(onGetPLayerCard).catch(catchError);
   updateSpinner("sync-roster");
   syncRoster().then(onSyncRoster).catch(catchError);
-};
-
-const start = () => {
-  //updateSpinner("session");
-  //createSession().then(onCreateSession).catch(catchError);
-  onCreateSession();
 };
 
 start();
